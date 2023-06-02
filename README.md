@@ -7,3 +7,6 @@ https://www.youtube.com/watch?v=VmbA0pi2cRQ: Linear Regression From Scratch
 https://www.youtube.com/watch?v=KYNuzfn5Fx0: Multiple Linear Regression From Scratch
 
 https://medium.com/analytics-vidhya/multiple-linear-regression-from-scratch-using-python-db9368859f
+
+Feature matching?
+https://courses.cs.washington.edu/courses/cse455/09wi/Lects/lect6.pdf
