@@ -123,7 +123,7 @@ class I:
                         original_img[src_y2][src_x1][ch] * w3 +
                         original_img[src_y2][src_x2][ch] * w4
                     )
-                    interpolated_px.append(interpolated_ch)
+                    interpolated_px.append(int(interpolated_ch))
                 row.append(interpolated_px)
             resized_img.append(row)
 
