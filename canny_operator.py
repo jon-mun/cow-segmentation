@@ -245,12 +245,41 @@ def set_weak_to_zero(res, weak):
                 img[i][j] = 0
     return img
 
+def median_filter(gray_img, mask=3):
+    """
+    :param gray_img: gray image
+    :param mask: mask size
+    :return: image with median filter
+    """
+    # set image borders
+    bd = int(mask / 2)
+    
+    row = len(gray_img)
+    col = len(gray_img[0])
+    
+    # copy image size
+    median_img = [[0] * col for i in range(row)]
+    
+    for i in range(bd, row - bd):
+        for j in range(bd, col - bd):
+            # get mask according with mask
+            kernel = [[gray_img[i - bd + k][j - bd + l] for l in range(mask)] for k in range(mask)]
+            kernel = I.flatten(kernel)
+            sorted_list = sorted(kernel)
+            # calculate mask median
+            median = sorted_list[int(len(sorted_list) / 2)]
+            median_img[i][j] = median
+    return median_img
 
 # final
 def canny_edge_detector(img, low=0.05, high=0.09, hyst=True):
     gray = I.to_gray(img)
-    blur = gaussian_blur(gray, 3, 1)
-    Ix, Iy = sobel_operator(blur)
+    median = median_filter(gray, mask = 6)
+    
+    blurred_img = gaussian_blur(gray, 3, 1)
+    sharpener = [[median[j][i]-blurred_img[j][i] for i in range(len(gray[0]))] for j in range(len(gray))]
+    sharpened = [[median[j][i]+sharpener[j][i] for i in range(len(median[0]))] for j in range(len(median))]
+    Ix, Iy = sobel_operator(median)
     Ixy = gradient_magnitude(Ix, Iy)
     Itheta = gradient_direction(Ix, Iy)
     nms = non_max_supp(Ixy, Itheta)
