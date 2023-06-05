@@ -290,4 +290,4 @@ def canny_edge_detector(img, low=0.05, high=0.09, hyst=True):
     else:
         final = set_weak_to_zero(res, weak)
     
-    return final
+    return final[6:-6][6:-6]
