@@ -237,6 +237,16 @@ def hysteresis(img, weak, strong=255):
                 
     return img
 
+def set_weak_to_zero(res, weak):
+    img = copy.deepcopy(res)
+    for i in range(len(img)):
+        for j in range(len(img[0])):
+            if img[i][j] == weak:
+                img[i][j] = 0
+    return img
+
+
+# final
 def canny_edge_detector(img, low=0.05, high=0.09, hyst=True):
     gray = I.to_gray(img)
     blur = gaussian_blur(gray, 3, 1)
