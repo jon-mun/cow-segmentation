@@ -247,7 +247,7 @@ def set_weak_to_zero(res, weak):
 
 
 # final
-def canny_edge_detector(img, low=0.05, high=0.09, hyst=True):
+def canny_edge_detector(img, low=0.05, high=0.09, hyst=True, verbose=False):
     gray = I.to_gray(img)
     blur = gaussian_blur(gray, 3, 1)
     Ix, Iy = sobel_operator(blur)
@@ -260,5 +260,41 @@ def canny_edge_detector(img, low=0.05, high=0.09, hyst=True):
         final = hysteresis(res, weak, strong)
     else:
         final = set_weak_to_zero(res, weak)
-    
+        
+    if verbose:
+        fig, ax = plt.subplots(ncols=1, nrows=8, figsize=(20, 20))
+        
+        ax[0].imshow(blur, cmap='gray')
+        ax[0].set_title('Gaussian Blur')
+        ax[0].axis('off')
+        
+        ax[1].imshow(Ix, cmap='gray')
+        ax[1].set_title('Difference X')
+        ax[1].axis('off')
+        
+        ax[2].imshow(Iy, cmap='gray')
+        ax[2].set_title('Difference Y')
+        ax[2].axis('off')
+        
+        ax[3].imshow(Ixy, cmap='gray')
+        ax[3].set_title('Gradient Magnitude')
+        ax[3].axis('off')
+        
+        ax[4].imshow(Itheta, cmap='gray')
+        ax[4].set_title('Gradient Direction')
+        ax[4].axis('off')
+        
+        ax[5].imshow(nms, cmap='gray')
+        ax[5].set_title('Non-Maximum Suppression')
+        ax[5].axis('off')
+        
+        ax[6].imshow(res, cmap='gray')
+        ax[6].set_title('Double Thresholding')
+        ax[6].axis('off')
+        
+        ax[7].imshow(final, cmap='gray')
+        ax[7].set_title('Final')
+        ax[7].axis('off')
+        
+
     return final
